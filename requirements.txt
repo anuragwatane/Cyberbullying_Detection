@@ -1,0 +1,7 @@
+Flask==1.1.2
+~umpy==1.16.1
+Flask_Cors==3.0.9
+pandas==1.0.4
+torch==1.8.1
+transformers==4.6.1
+numpy==1.21.0
