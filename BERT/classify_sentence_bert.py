@@ -14,7 +14,7 @@ class classify_sentence_bert_cls:
         input_id_sentence = []
         attention_mask_sentence = []
 
-        model = BertForSequenceClassification.from_pretrained(self.output_dir)
+        model = BertForSequenceClassification.from_pretrained(self.output_dir, cache_dir=None)
 
         print(f"\nThe model can predict {model.num_labels} different classes\n")
 
