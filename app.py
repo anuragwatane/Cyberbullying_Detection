@@ -30,7 +30,7 @@ def submit_text():
     try:
         text = request.form['text_name']
 
-        pred_class = obj_classify_sentence_bert.classify_sentence(text)
+        pred_class = obj_classify_sentence_bert.classify_sentence_2(text)
 
         label = cfg.binary_classes_bert.get(pred_class)
 
@@ -42,7 +42,7 @@ def submit_text():
         return render_template('index.html', table = df.to_html(classes='data', header="true", index=False) )
     except:
         print("Unexpected error:", sys.exc_info()[1])
-        #raise  # uncomment to view complete error
+        raise  # uncomment to view complete error
         return ("Unexpected error: " + str(sys.exc_info()[1]))
 
 if __name__=='__main__':
