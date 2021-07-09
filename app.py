@@ -42,8 +42,8 @@ def submit_text():
         return render_template('index.html', table = df.to_html(classes='data', header="true", index=False) )
     except:
         print("Unexpected error:", sys.exc_info()[1])
-        raise  # uncomment to view complete error
-        #return ("Unexpected error: " + str(sys.exc_info()[1]))
+        #raise  # uncomment to view complete error
+        return ("Unexpected error: " + str(sys.exc_info()[1]))
 
 if __name__=='__main__':
     #app.run(debug=True, host='0.0.0.0', port=5000)
