@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'cyberbullying-detection'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_6b113f01584941fca34baf5c7f021341 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_4ca5136f2678411392ec56a50cb26b78 }}
