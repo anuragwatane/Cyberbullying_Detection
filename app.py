@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_cors import CORS
 import pandas as pd
 import sys
+import traceback
 
 from BERT import classify_sentence_bert
 from config import ProductionConfig as cfg
@@ -41,9 +42,9 @@ def submit_text():
 
         return render_template('index.html', table = df.to_html(classes='data', header="true", index=False) )
     except:
-        print("Unexpected error:", sys.exc_info()[1])
+        print(str(traceback.format_exc()))
         #raise  # uncomment to view complete error
-        return ("Unexpected error: " + str(sys.exc_info()[1]))
+        return (str(traceback.format_exc()))
 
 if __name__=='__main__':
     #app.run(debug=True, host='0.0.0.0', port=5000)

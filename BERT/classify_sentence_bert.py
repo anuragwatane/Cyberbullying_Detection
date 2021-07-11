@@ -79,7 +79,7 @@ class classify_sentence_bert_cls:
             sentence,  # Sentence to encode.
             add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
             max_length=self.MAX_LENGTH,  # Pad & truncate all sentences.
-            pad_to_max_length=True,
+            padding=True,
             return_attention_mask=True,  # Construct attn. masks.
             return_tensors='pt',  # Return pytorch tensors.
         )
