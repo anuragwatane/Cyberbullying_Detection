@@ -15,7 +15,7 @@ class classify_sentence_bert_cls:
         input_id_sentence = []
         attention_mask_sentence = []
 
-        model = BertForSequenceClassification.from_pretrained(self.output_dir, local_files_only=True)
+        model = BertForSequenceClassification.from_pretrained(self.output_dir)
 
         print(f"\nThe model can predict {model.num_labels} different classes\n")
 
@@ -25,7 +25,7 @@ class classify_sentence_bert_cls:
             sentence,                    # Sentence to encode.
             add_special_tokens=True,     # Add '[CLS]' and '[SEP]'
             max_length=self.MAX_LENGTH,       # Pad & truncate all sentences.
-            pad_to_max_length=True,
+            padding=True,
             return_attention_mask=True,  # Construct attn. masks.
             return_tensors='pt',         # Return pytorch tensors.
         )
@@ -52,7 +52,6 @@ class classify_sentence_bert_cls:
 
         return pred_label_from_prob
     """
-
 
     """
     def classify_sentence_2(self, sentence):
@@ -109,23 +108,23 @@ class classify_sentence_bert_cls:
     """
 
 
-    def classify_sentence(self, sentence):
+    def classify_sentence_3(self, sentence):
         input_id_sentence = []
         attention_mask_sentence = []
 
-        model = BertForSequenceClassification.from_pretrained(self.output_dir)
+        model = torch.load(self.output_dir, map_location=torch.device('cpu'))
 
         print(f"\nThe model can predict {model.num_labels} different classes\n")
 
-        tokenizer = BertTokenizer.from_pretrained(self.output_dir)
+        tokenizer = BertTokenizer(cfg.bert_state_dict_vocab)
 
         encoded_dict = tokenizer.encode_plus(
-            sentence,  # Sentence to encode.
-            add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
-            max_length=self.MAX_LENGTH,  # Pad & truncate all sentences.
+            sentence,                    # Sentence to encode.
+            add_special_tokens=True,     # Add '[CLS]' and '[SEP]'
+            max_length=self.MAX_LENGTH,       # Pad & truncate all sentences.
             padding=True,
             return_attention_mask=True,  # Construct attn. masks.
-            return_tensors='pt',  # Return pytorch tensors.
+            return_tensors='pt',         # Return pytorch tensors.
         )
 
         # Add the encoded sentence to the list.
@@ -150,6 +149,7 @@ class classify_sentence_bert_cls:
 
         return pred_label_from_prob
 
+
 if __name__ == "__main__":
     text = """
     I really dont want to start my weekend off this way - yet here I am. This vile post should be labeled a lie
@@ -157,4 +157,4 @@ if __name__ == "__main__":
 
     obj = classify_sentence_bert_cls()
 
-    print(obj.classify_sentence(text))
+    print(obj.classify_sentence_3(text))
