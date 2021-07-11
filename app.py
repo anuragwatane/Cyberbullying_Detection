@@ -31,7 +31,7 @@ def submit_text():
     try:
         text = request.form['text_name']
 
-        pred_class = obj_classify_sentence_bert.classify_sentence_2(text)
+        pred_class = obj_classify_sentence_bert.classify_sentence(text)
 
         label = cfg.binary_classes_bert.get(pred_class)
 
