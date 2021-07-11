@@ -66,7 +66,7 @@ class classify_sentence_bert_cls:
 
         #model.eval()
 
-        tokenizer = BertTokenizer(cfg.bert_state_dict_vocab, do_lower_case=True)
+        tokenizer = BertTokenizer(cfg.bert_state_dict_vocab)
 
         ##--------------------
 
