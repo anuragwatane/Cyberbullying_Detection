@@ -4,10 +4,11 @@ from transformers import BertTokenizer
 from transformers import BertForSequenceClassification, BertConfig
 from config import ProductionConfig as cfg
 
+
 class classify_sentence_bert_cls:
 
     def __init__(self):
-        self.output_dir = cfg.bert_model_and_tokenizer_path
+        #self.output_dir = cfg.bert_model_and_tokenizer_path
         self.MAX_LENGTH = 40
 
     """
@@ -53,7 +54,7 @@ class classify_sentence_bert_cls:
         return pred_label_from_prob
     """
 
-    """
+
     def classify_sentence_2(self, sentence):
 
         config = BertConfig.from_json_file(cfg.bert_state_dict_config)
@@ -105,9 +106,9 @@ class classify_sentence_bert_cls:
         print(f"\nThe predicted class is: {pred_label_from_prob}")
 
         return pred_label_from_prob
+
+
     """
-
-
     def classify_sentence_3(self, sentence):
         input_id_sentence = []
         attention_mask_sentence = []
@@ -148,6 +149,7 @@ class classify_sentence_bert_cls:
         print(f"\nThe predicted class is: {pred_label_from_prob}")
 
         return pred_label_from_prob
+    """
 
 
 if __name__ == "__main__":
@@ -157,4 +159,4 @@ if __name__ == "__main__":
 
     obj = classify_sentence_bert_cls()
 
-    print(obj.classify_sentence_3(text))
+    print(obj.classify_sentence_2(text))

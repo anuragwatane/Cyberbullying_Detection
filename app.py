@@ -31,7 +31,7 @@ def submit_text():
     try:
         text = request.form['text_name']
 
-        pred_class = obj_classify_sentence_bert.classify_sentence_3(text)
+        pred_class = obj_classify_sentence_bert.classify_sentence_2(text)
 
         label = cfg.binary_classes_bert.get(pred_class)
 
@@ -48,4 +48,5 @@ def submit_text():
 
 if __name__=='__main__':
     #app.run(debug=True, host='0.0.0.0', port=5000)
-    app.run(debug=True, host='0.0.0.0')
+    # app.run(debug=True, host='0.0.0.0')  # for Flask on azure
+    app.run(host='0.0.0.0', port=7357)  # for docker image
