@@ -4,6 +4,8 @@ from transformers import BertTokenizer
 from transformers import BertForSequenceClassification, BertConfig
 from config import ProductionConfig as cfg
 
+from torchinfo import summary  # just to print model summary
+
 
 class classify_sentence_bert_cls:
 

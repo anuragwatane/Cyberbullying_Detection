@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
 import pandas as pd
-import sys
 import traceback
-
-from BERT import classify_sentence_bert
 from config import ProductionConfig as cfg
 
+from BERT import classify_sentence_bert
 obj_classify_sentence_bert = classify_sentence_bert.classify_sentence_bert_cls()  # create object of the class
+
+from ML_and_Ensemble_Classifier import Logistic_Regr_Classifier, Ensemble_Classifier
+obj_classify_sentence_logr = Logistic_Regr_Classifier.logis_reg_classifier_cls()
+obj_classify_sentence_ensemble = Ensemble_Classifier.ensemble_classifier_cls()
 
 app = Flask(__name__)
 cors = CORS(app)  # need flask_cors to do a cross-origin request
@@ -30,6 +32,7 @@ def index():
 def submit_text():
     try:
         text = request.form['text_name']
+        df = pd.DataFrame(columns=['Model', 'Class'])
 
         pred_class = obj_classify_sentence_bert.classify_sentence_2(text)
 
@@ -37,8 +40,17 @@ def submit_text():
 
         result = {'Model': 'Bert', 'Class': label}
 
-        df = pd.DataFrame(columns=['Model', 'Class'])
         df = df.append(result, ignore_index=True)
+
+        pred_class_lr = obj_classify_sentence_logr.classify_sentence_log_reg(text)
+        label_lr = cfg.binary_classes_bert.get(pred_class_lr)
+        result_lr = {'Model': 'Logistic Regression', 'Class': label_lr}
+        df = df.append(result_lr, ignore_index=True)
+
+        pred_class_ensemble = obj_classify_sentence_ensemble.classify_sentence_ensemble(text)
+        label_ensemble = cfg.binary_classes_bert.get(pred_class_ensemble)
+        result_ensemble = {'Model': 'Ensemble Model', 'Class': label_ensemble}
+        df = df.append(result_ensemble, ignore_index=True)
 
         return render_template('index.html', table = df.to_html(classes='data', header="true", index=False) )
     except:
@@ -47,6 +59,6 @@ def submit_text():
         return (str(traceback.format_exc()))
 
 if __name__=='__main__':
-    #app.run(debug=True, host='0.0.0.0', port=5000)
-    # app.run(debug=True, host='0.0.0.0')  # for Flask on azure
-    app.run(host='0.0.0.0', port=7357)  # for docker image
+    app.run(debug=True, host='0.0.0.0', port=5000)
+    #app.run(debug=True, host='0.0.0.0')  # for Flask on azure
+    #app.run(host='0.0.0.0', port=80)  # for docker image
