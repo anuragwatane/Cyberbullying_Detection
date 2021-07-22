@@ -18,10 +18,24 @@ class Config(object):
     #bert_state_dict_vocab = os.path.join(os.path.dirname(os.path.abspath(__file__)), "task1_model_save_by_epoch", "vocab.txt")
 
     logis_reg_model = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ML_and_Ensemble_models", "countvec_loglr.pkl")
+    svm_model = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ML_and_Ensemble_models", "countvec_SVM.pkl")
+    multiNB_model = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ML_and_Ensemble_models", "countvec_multiNB.pkl")
     ensemble_model = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ML_and_Ensemble_models", "countvec_voteCLF.pkl")
 
-    binary_classes_bert = {0: 'Cyberbullying', 1: 'None'}
+    binary_classes_bert = {0: 'Cyberbullying', 1: 'Not'}
     multiple_classes_bert = {0: 'Hate', 1: 'None', 2: 'Offensive', 3: 'Profane'}
+
+    tsv_dataset_1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Datasets", "2019_english_dataset", "english_dataset.tsv")
+    tsv_dataset_2 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Datasets", "2019_english_dataset", "hasoc2019_en_test-2919.tsv")
+    xlsx_dataset_3 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Datasets", "2020_english_dataset", "english.xlsx")
+    csv_dataset_4 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Datasets", "2020_english_dataset", "english_test_1509.csv")
+    csv_dataset_5 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Datasets", "2020_english_dataset", "hasoc_2020_en_train.csv")
+    txt_dataset_6 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Datasets", "Dataset_from_kaggle", "si650winter11", "training.txt")
+    combined_dataset = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Datasets", "combined_dataset", "combined_dataset.csv")
+
+    existing_column_name_list = ['text', 'task_1', 'task_2']
+    existing_column_name_list_2 = ['text', 'task1', 'task2']
+    new_column_names_list = ['text', 'binary_classes', 'multiple_classes']
 
 
 class ProductionConfig(Config):  # inherit the parent class Config

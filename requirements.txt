@@ -7,3 +7,4 @@ Flask==1.1.2
 numpy==1.21.1
 scikit_learn==0.24.2
 torchinfo==1.5.2
+openpyxl==3.0.7
