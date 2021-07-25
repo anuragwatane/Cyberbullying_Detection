@@ -71,6 +71,6 @@ def submit_text():
         return (str(traceback.format_exc()))
 
 if __name__=='__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    #app.run(debug=True, host='0.0.0.0', port=5000)
     #app.run(debug=True, host='0.0.0.0')  # for Flask on azure
-    #app.run(host='0.0.0.0', port=80)  # for docker image
+    app.run(host='0.0.0.0', port=80)  # for docker image
