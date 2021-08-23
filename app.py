@@ -38,29 +38,29 @@ def submit_text():
 
         pred_class = obj_classify_sentence_bert.classify_sentence_2(text)
 
-        label = cfg.binary_classes_bert.get(pred_class)
+        label = cfg.binary_classes.get(pred_class)
 
         result = {'Model': 'Bert', 'Class': label}
 
         df = df.append(result, ignore_index=True)
 
         pred_class_lr = obj_classify_sentence_logr.classify_sentence_log_reg(text)
-        label_lr = cfg.binary_classes_bert.get(pred_class_lr)
+        label_lr = cfg.binary_classes.get(pred_class_lr)
         result_lr = {'Model': 'Logistic Regression', 'Class': label_lr}
         df = df.append(result_lr, ignore_index=True)
 
         pred_class_svm = obj_classify_sentence_svm.classify_sentence_svm(text)
-        label_svm = cfg.binary_classes_bert.get(pred_class_svm)
+        label_svm = cfg.binary_classes.get(pred_class_svm)
         result_svm = {'Model': 'Support Vector Machine', 'Class': label_svm}
         df = df.append(result_svm, ignore_index=True)
 
         pred_class_multiNB = obj_classify_sentence_multiNB.classify_sentence_multiNB(text)
-        label_multiNB = cfg.binary_classes_bert.get(pred_class_multiNB)
+        label_multiNB = cfg.binary_classes.get(pred_class_multiNB)
         result_multiNB = {'Model': 'MultinomialNB', 'Class': label_multiNB}
         df = df.append(result_multiNB, ignore_index=True)
 
         pred_class_ensemble = obj_classify_sentence_ensemble.classify_sentence_ensemble(text)
-        label_ensemble = cfg.binary_classes_bert.get(pred_class_ensemble)
+        label_ensemble = cfg.binary_classes.get(pred_class_ensemble)
         result_ensemble = {'Model': 'Ensemble Model', 'Class': label_ensemble}
         df = df.append(result_ensemble, ignore_index=True)
 

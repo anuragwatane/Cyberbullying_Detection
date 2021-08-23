@@ -13,8 +13,10 @@ class data_merging_class:
         df = pd.read_csv(file_path, sep = '\t', usecols=column_name_list)
         df.columns = cfg.new_column_names_list  # rename column names
 
-        rename_category = {'HOF': 'cyberbullying'}
+        rename_category = {'HOF': 'cyberbullying', 'PRFN': 'OFFN'}
         df['binary_classes'].replace(rename_category, inplace=True)
+
+        df['multiple_classes'].replace(rename_category, inplace=True)
 
         return df
 
@@ -24,8 +26,10 @@ class data_merging_class:
         df =  pd.read_excel(file_path, usecols=column_name_list)
         df.columns = cfg.new_column_names_list  # rename column names
 
-        rename_category = {'HOF': 'cyberbullying'}
+        rename_category = {'HOF': 'cyberbullying', 'PRFN': 'OFFN'}
         df['binary_classes'].replace(rename_category, inplace=True)
+
+        df['multiple_classes'].replace(rename_category, inplace=True)
 
         return df
 
@@ -33,10 +37,32 @@ class data_merging_class:
     def read_csv(self, file_path, column_name_list):
 
         df = pd.read_csv(file_path, usecols=column_name_list)
-        df.columns = cfg.new_column_names_list
 
-        rename_category = {'HOF': 'cyberbullying'}
-        df['binary_classes'].replace(rename_category, inplace=True)
+        column_rename_dict = {'tweet': 'text', 'task1': 'binary_classes', 'task2': 'multiple_classes', 'class': 'multiple_classes'}
+        df.rename(columns=column_rename_dict, inplace=True)
+
+        if 'binary_classes' not in df.columns:
+            df['binary_classes'] = df['multiple_classes']
+
+        unique_labels = df['binary_classes'].unique()
+
+        if 'HOF' in unique_labels or 'racism' in unique_labels:
+            rename_category = {'HOF': 'cyberbullying', 'racism': 'cyberbullying', 'sexism': 'cyberbullying', 'none': 'NOT'}
+            df['binary_classes'].replace(rename_category, inplace=True)
+
+        elif 2 in df['binary_classes'].unique():
+            rename_category = {0: 'cyberbullying', 1: 'cyberbullying', 2: 'NOT'}
+            df['binary_classes'].replace(rename_category, inplace=True)
+
+        unique_labels = df['multiple_classes'].unique()
+
+        if 'PRFN' in unique_labels or 'racism' in unique_labels:
+            rename_category = {'PRFN': 'OFFN', 'racism': 'OFFN', 'sexism': 'OFFN', 'none': 'NONE'}
+            df['multiple_classes'].replace(rename_category, inplace=True)
+
+        elif 2 in df['multiple_classes'].unique():
+            rename_category = {0: 'HATE', 1: 'OFFN', 2: 'NONE'}
+            df['multiple_classes'].replace(rename_category, inplace=True)
 
         return df
 
@@ -45,7 +71,7 @@ class data_merging_class:
 
         df = pd.read_table(file_path, header=None)
         df.columns =  ['binary_classes', 'text']  # rename columns
-        df['multiple_classes'] = None  # add new column
+        df['multiple_classes'] = 'NONE'  # add new column
 
         binary_to_category = {0: 'cyberbullying', 1: 'NOT'}
         df['binary_classes'].replace(binary_to_category, inplace=True)
@@ -61,8 +87,10 @@ class data_merging_class:
         csv_df_4 = self.read_csv(cfg.csv_dataset_4, cfg.existing_column_name_list_2)
         csv_df_5 = self.read_csv(cfg.csv_dataset_5, cfg.existing_column_name_list_2)
         txt_df_6 = self.read_txt(cfg.txt_dataset_6)
+        csv_df_7 = self.read_csv(cfg.csv_dataset_7, cfg.existing_column_name_list_3)
+        csv_df_9 = self.read_csv(cfg.csv_dataset_9, cfg.existing_column_name_list_4)
 
-        df_list = [tsv_df_1, tsv_df_2, xlsx_df_3, csv_df_4, csv_df_5, txt_df_6]
+        df_list = [tsv_df_1, tsv_df_2, xlsx_df_3, csv_df_4, csv_df_5, txt_df_6, csv_df_7, csv_df_9]
         combined_df = pd.concat(df_list)
 
         combined_df.drop_duplicates(keep='last', inplace=True)
